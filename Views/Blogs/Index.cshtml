@@ -1,0 +1,59 @@
+﻿@model IEnumerable<ChrisConnorBlogAssessment.Models.Blog>
+
+@{
+    ViewBag.Title = "Manage Blogs";
+}
+
+<h2>Manage Site Blogs</h2>
+
+<p>
+    <a href="@Url.Action("Create","Blogs")" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-plus-sign"></span> Create New Blog</a>
+</p>
+<table class="table">
+    <tr>
+
+
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateAdded)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateModified)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsPublished)
+        </th>
+        <th>Manage</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+
+        <td>
+@Html.ActionLink(item.Title, "Edit", new { id = item.BlogId })        </td>
+        <td>
+            <span class="label label-info">@Html.DisplayFor(modelItem => item.Category.CategoryName)</span>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateAdded)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateModified)
+        </td>
+        <td>
+            <span class="label label-@(item.IsPublished ? "success" : "warning")">@(item.IsPublished ? "Published" : "Draft")</span>
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new {id = item.BlogId}) |
+            @Html.ActionLink("Details", "Details", new {id = item.BlogId}) |
+            @Html.ActionLink("Delete", "Delete", new {id = item.BlogId})
+        </td>
+    </tr>
+}
+
+</table>

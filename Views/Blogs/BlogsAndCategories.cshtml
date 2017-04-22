@@ -1,0 +1,46 @@
+﻿@model ChrisConnorBlogAssessment.ViewModels.BlogsCategoriesViewModel
+@{
+    ViewBag.Title = "Blogs";
+}
+
+<h1>Blogs</h1>
+
+<div class="row">
+    
+    <div class="col-md-8">
+        <h2>Articles</h2>  
+        @if(Model.Blogs.Count > 0)
+        {
+            foreach (var b in Model.Blogs)
+             {
+                 <article class="post">
+
+                     <h2>@Html.ActionLink(b.Title, "ViewBlog", new {id = b.BlogId})</h2>
+                     <p><span class="badge">@b.Comments.Count</span> Comments
+                     </p>
+                     <p>Category: <a href="/Blogs/BlogsAndCategories?category=@b.Category.CategoryName">@b.Category.CategoryName</a>
+                     </p>
+                     <p>By @b.User.Forename @b.User.Surname on @b.DateAdded.ToShortDateString() @(b.DateModified != null ? "Modified on " + b.DateModified.ToShortDateString() : "")</p>
+                     <hr/>
+                     <p>@b.Content</p>
+                 </article>
+             }
+        }
+        else
+        {
+            <p>Please bear with us, we are working on some new content :)</p>
+        }
+    </div>
+    
+    <div class="col-md-4">
+        <h2>Filter Categories</h2>
+        <ul>
+            @foreach (var c in Model.Categories)
+            {
+                <li><a href="/Blogs/Category/@c.CategoryName">@c.CategoryName</a></li>
+            }
+        </ul>
+    </div>
+
+</div>
+

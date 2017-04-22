@@ -1,0 +1,10 @@
+﻿
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@foreach (var user in Model.Users)
+{
+    <p>@user.Forename user.Surname <a href=""> Manage</a></p>
+}

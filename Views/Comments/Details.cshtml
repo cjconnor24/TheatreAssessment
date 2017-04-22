@@ -1,0 +1,50 @@
+﻿@model ChrisConnorBlogAssessment.Models.Comment
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Comment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Blog.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Blog.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Forename)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Forename)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Content)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Content)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateAdded)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateAdded)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CommentId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

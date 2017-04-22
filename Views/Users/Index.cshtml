@@ -1,0 +1,88 @@
+﻿@using Microsoft.Ajax.Utilities
+@model ChrisConnorBlogAssessment.ViewModels.RolesAndUsersViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<div class="row">
+    
+    <div class="col-md-4">
+        <h2>User Roles</h2>
+        <ul class="list-group">
+            @foreach (var role in Model.Roles)
+            {
+                <li class="list-group-item"><a href="@role.Id">@role.Name.Replace("_", " ")'s</a></li>
+            }
+        </ul>
+    </div>
+    
+    <div class="col-md-8">
+        <h2>Users</h2>
+        <table class="table table-hover table-responsive">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th class="hidden-xs hidden-sm">Email</th>
+                <th>Status</th>
+                <th class="hidden-xs hidden-sm">Roles</th>  
+                <th>Actions</th>
+            </tr>
+            </thead>
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@user.FullName</td>
+                    <td class="hidden-xs hidden-sm">@user.UserName</td>
+
+                    <td>
+                        <span class="label label-@(user.IsActive ? "success" : "warning")">@(user.IsActive ? "Active" : "Suspended")</span>
+                    </td>
+                    
+
+
+                        @foreach (var r in user.Roles)
+                        {
+                            switch (r.RoleName)
+                            {
+                                case "Theatre_Administrator":
+                                    <td class="hidden-xs hidden-sm">
+                                        <span class="label label-success">@r.RoleName.Replace("_", " ")</span>
+                                        </td>
+                                    <td></td>
+
+                                    break;
+                                case "Theatre_Staff":
+                                    <td class="hidden-xs hidden-sm">
+                                        <p><span class="label label-warning">@r.RoleName.Replace("_", " ")</span><br /></p>
+                                    </td>
+                                    <td>
+                                        
+                                        <a href="@Url.Action("ToggleState", "Users",new {email= user.Email})" class="btn btn-xs btn-block btn-@(user.IsActive==true ? "danger" : "success")"><span class="glyphicon glyphicon-off"></span> @(user.IsActive==true ? "Suspend" : "Reactivate") User</a>
+                                            <a href="@Url.Action("DemoteUser", "Users",new {email= user.Email})" class="btn btn-xs btn-block btn-warning"><span class="glyphicon glyphicon-arrow-down"></span> Demote User</a>
+                                        
+                                        </td>
+                                        break;
+                                        case "Theatre_User":
+                                    <td>
+                                        <p><span class="label label-info">@r.RoleName.Replace("_", " ")</span><br /></p>
+                                    </td>
+                                    <td>
+                                        
+                                            <a href="@Url.Action("ToggleState", "Users",new {email= user.Email})" class="btn btn-xs btn-block btn-@(user.IsActive==true ? "danger" : "success")"><span class="glyphicon glyphicon-off"></span>  @(user.IsActive==true ? "Suspend" : "Reactivate") User</a>
+                                            <a href="@Url.Action("PromoteUser", "Users",new {email= user.Email})" class="btn btn-xs btn-block btn-success"><span class="glyphicon glyphicon-arrow-up"></span> Promote User</a>
+                                        
+                                    </td>
+                                    break;
+                            }
+
+                        }
+                                    
+
+                </tr>
+            }
+        </table>
+    </div>
+
+</div>
+

@@ -1,0 +1,70 @@
+﻿@using ChrisConnorBlogAssessment.Models
+@using Microsoft.AspNet.Identity
+@model ChrisConnorBlogAssessment.ViewModels.BlogDisplayViewModel
+@{
+    ViewBag.Title = "ViewBlog";
+}
+<p><a href="javascript:void(0);" class="btn btn-default" onclick="history.go(-1);">Return to List</a></p>
+<h1>@Model.Blog.Title</h1>
+<p>@Model.Blog.Content</p>
+
+<h3>Comments</h3>
+@if (Model.Blog.Comments.Count > 0)
+{
+    foreach (var c in Model.Blog.Comments)
+    {
+        <div class="comment">
+            <p>@c.Content </p>
+            <p>Posted by <strong>@c.User.Forename.Substring(0,1) @c.User.Surname</strong> on @c.DateAdded.ToString("D") at @c.DateAdded.ToShortTimeString()</p>
+            
+            @if (User.IsInRole(RoleNames.RoleAdministrator)||User.IsInRole(RoleNames.RoleStaff) )
+            {
+                @Html.ActionLink("Remove", "Delete", "Comments", new {id = c.CommentId}, null)
+                
+                
+            }
+        </div>
+        <hr />
+    }
+}
+else
+{
+    <p>There are no comments yet - be the first to comment</p>
+}
+
+<h3>Add New Comment</h3>
+
+
+@if (User.Identity.IsAuthenticated)
+{
+    
+    using (Html.BeginForm("AddComment", "Blogs"))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model=>model.BlogId,"")
+                
+                
+                @*<input type="hidden" name="Id" value="@User.Identity.GetUserId()" />*@
+                
+            </div>
+            <input type="submit" class="btn btn-default" value="Add Comment" />
+        </div>
+
+    }
+}
+else
+{
+    <p>Please login to comment.</p>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

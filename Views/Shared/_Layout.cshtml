@@ -1,0 +1,66 @@
+﻿@using ChrisConnorBlogAssessment.Models
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Cumbernauld Theatre Group | Local Theatre Group, Cumbernauld, Glasgow</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style type="text/css">
+        body {
+            padding-top: 65px;    
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                
+                @*@Html.ActionLink("Local Theatre Group", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+                <a href="/" class="navbar-brand"><span class="icon-theatre-group"></span> Local Theatre</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Blogs", "BlogsAndCategories", "Blogs")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @if (User.IsInRole(RoleNames.RoleAdministrator) || User.IsInRole(RoleNames.RoleStaff))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Manage Blogs", "Index", "Blogs")</li>
+                                <li>@Html.ActionLink("Manage Users", "Index", "Users")</li>
+                                <li>@Html.ActionLink("Manage Categories", "Index", "Categories")</li>
+                                <li>@Html.ActionLink("Manage Comments", "Index", "Comments")</li>
+                            </ul>
+                        </li>
+                        
+
+                    }
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p class="text-center">&copy; @DateTime.Now.Year - Cumbernauld Theatre Group</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

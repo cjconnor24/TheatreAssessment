@@ -1,0 +1,24 @@
+﻿@model ChrisConnorBlogAssessment.ViewModels.RoleUserViewModel
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Staff</h2>
+@foreach (var s in Model.Staff)
+{
+    
+    <p>@s.Forename @s.Surname @s.IsActive<a href="javascript:alert('promote user')" class="btn btn-primary">Promote to Admin</a></p>
+}
+<hr />
+<h2>Users</h2>
+@foreach (var user in Model.Users)
+{
+    <p>@user.Forename @user.Surname @user.IsActive<a href="javascript:alert('promote user')" class="btn btn-primary">Promote to Staff</a> <a href="javascript:alert('promote user')" class="btn btn-danger"><span class="glyphicon glyphicon-alert"></span> Suspend</a></p>
+
+
+}
+<h2>Admin</h2>
+@foreach (var x in Model.Admin)
+{
+    <p>@x.Forename @x.Surname @x.IsActive</p>
+}
